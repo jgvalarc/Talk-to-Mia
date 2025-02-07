@@ -1,0 +1,179 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Talk to Mia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #1a73e8;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        #chat-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 20px;
+            height: 60vh;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            margin: 10px 0;
+            padding: 12px 20px;
+            border-radius: 20px;
+            max-width: 80%;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .user-message {
+            background: #1a73e8;
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+
+        .bot-message {
+            background: #f1f3f4;
+            color: #202124;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+
+        #input-container {
+            display: flex;
+            gap: 10px;
+            position: relative;
+        }
+
+        #user-input {
+            flex: 1;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 30px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-size: 16px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        #user-input:focus {
+            outline: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        #send-button {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        #send-button:hover {
+            background: #1557b0;
+            transform: translateY(-1px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .timestamp {
+            font-size: 0.8em;
+            color: #70757a;
+            margin-top: 5px;
+            text-align: right;
+        }
+        .mia-portrait {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #1a73e8;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            background: url('{% static "images/MiaProto.png" %}') no-repeat center center;
+            background-size: cover;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .mia-portrait:hover {
+            transform: scale(1.05) rotate(-5deg);
+        }
+
+        body {
+            /* Adicione padding para evitar sobreposição */
+            padding-bottom: 160px; /* Espaço para o retrato */
+        }
+
+        /* Ajuste opcional para mobile */
+        @media (max-width: 768px) {
+            .mia-portrait {
+                width: 80px;
+                height: 80px;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mia-portrait"></div>
+
+    <h1>💬 Talk to Mia</h1>
+    <div id="chat-container">
+        <!-- As respostas serão inseridas aqui mantendo a mesma estrutura -->
+    </div>
+    
+    <div id="input-container">
+        <input type="text" id="user-input" name="user_message" placeholder="Digite sua pergunta...">
+        <button id="send-button">Enviar</button>
+    </div>
+
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    <script src="{% static 'js/chat.js' %}"></script>
+    <script>
+        document.getElementById("user-input").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                document.getElementById("send-button").click();
+                this.value = ''; // Limpa o input após enviar
+            }
+        });
+
+        // Função para rolar automaticamente para o final do chat
+        function scrollToBottom() {
+            const chatContainer = document.getElementById('chat-container');
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        
+        // Chame esta função sempre que adicionar uma nova mensagem
+    </script>
+</body>
+</html>
