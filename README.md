@@ -21,8 +21,8 @@ This project implements an **AI-powered chatbot** using **Machine Learning (ML)*
 ## 🔧 Setup & Installation
 ### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/yourusername/chatbot_project.git
-cd chatbot_project
+git clone https://github.com/jgvalarc/Talk-to-Mia.git
+cd Talk-to-Mia
 ```
 
 ### 2️⃣ Create and Activate a Virtual Environment (Optional but Recommended)
